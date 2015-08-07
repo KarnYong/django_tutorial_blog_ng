@@ -138,3 +138,34 @@ class AdminTest(LiveServerTestCase):
         self.assertEquals(only_post.title, 'My second post')
         self.assertEquals(only_post.text, 'This is my second blog post')
 '''
+
+class PostViewTest(LiveServerTestCase):
+    def setUp(self):
+        self.client = Client()
+
+    def test_index(self):
+        # Create the post
+        post = Post()
+        post.title = 'My first post'
+        post.text = 'This is my first blog post'
+        post.pub_date = timezone.now()
+        post.save()
+
+        # Check new post saved
+        all_posts = Post.objects.all()
+        self.assertEquals(len(all_posts), 1)
+
+        # Fetch the index
+        response = self.client.get('/post/')
+        self.assertEquals(response.status_code, 200)
+
+        # Check the post title is in the response
+        self.assertTrue(post.title in response.content.decode("utf-8"))
+
+        # Check the post text is in the response
+        self.assertTrue(post.text in response.content.decode("utf-8"))
+
+        # Check the post date is in the response
+        self.assertTrue(str(post.pub_date.year) in response.content.decode("utf-8"))
+        self.assertTrue(post.pub_date.strftime('%b') in response.content.decode("utf-8"))
+        self.assertTrue(str(post.pub_date.day) in response.content.decode("utf-8"))
