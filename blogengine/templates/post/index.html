@@ -1,9 +1,13 @@
 {% extends "post/includes/base.html" %}
+
+	{% load custom_markdown %}
+
     {% block content %}
 		{% if latest_post_list %}
 		    <ul>
 		    {% for post in latest_post_list %}
-		        <li><a href="/post/{{ post.id }}/">{{ post.title }}: {{ post.text }} ({{ post.pub_date }})</a></li>
+		        <li><a href="/post/{{ post.id }}/">{{ post.title }}({{ post.pub_date }})</a></li>
+		        {{ post.text|custom_markdown }}
 		    {% endfor %}
 		    </ul>
 		{% else %}
