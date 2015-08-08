@@ -40,7 +40,7 @@ class AdminTest(LiveServerTestCase):
 
     def test_login(self):
         # Get login page
-        response = self.client.get('/admin/login/')
+        response = self.client.get('/admin/', follow=True)
 
         # Check response code
         self.assertEquals(response.status_code, 200)
@@ -52,7 +52,7 @@ class AdminTest(LiveServerTestCase):
         self.client.login(username='bobsmith', password="password")
 
         # Check response code
-        response = self.client.get('/admin/logout/')
+        response = self.client.get('/admin/')
         self.assertEquals(response.status_code, 200)
 
         # Check 'Log out' in response
@@ -63,7 +63,7 @@ class AdminTest(LiveServerTestCase):
         self.client.login(username='bobsmith', password="password")
 
         # Check response code
-        response = self.client.get('/admin/logout/')
+        response = self.client.get('/admin/')
         self.assertEquals(response.status_code, 200)
 
         # Check 'Log out' in response
@@ -73,7 +73,7 @@ class AdminTest(LiveServerTestCase):
         self.client.logout()
 
         # Check response code
-        response = self.client.get('/admin/login/')
+        response = self.client.get('/admin/', follow=True)
         self.assertEquals(response.status_code, 200)
 
         # Check 'Log in' in response
@@ -105,7 +105,6 @@ class AdminTest(LiveServerTestCase):
         all_posts = Post.objects.all()
         self.assertEquals(len(all_posts), 1)
 
-'''
     def test_edit_post(self):
         # Create the post
         post = Post()
@@ -118,7 +117,7 @@ class AdminTest(LiveServerTestCase):
         self.client.login(username='bobsmith', password="password")
 
         # Edit the post
-        response = self.client.post('/admin/blogengine/post/1/', {
+        response = self.client.post('/admin/blogengine/post/' + str(post.pk) + '/', {
             'title': 'My second post',
             'text': 'This is my second blog post',
             'pub_date_0': '2013-12-28',
@@ -137,7 +136,6 @@ class AdminTest(LiveServerTestCase):
         only_post = all_posts[0]
         self.assertEquals(only_post.title, 'My second post')
         self.assertEquals(only_post.text, 'This is my second blog post')
-'''
 
 class PostViewTest(LiveServerTestCase):
     def setUp(self):
