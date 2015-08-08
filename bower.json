@@ -1,0 +1,21 @@
+{
+  "name": "django_tutorial_blog_ng",
+  "version": "0.0.0",
+  "homepage": "https://github.com/KarnYong/django_tutorial_blog_ng",
+  "authors": [
+    "Karn Yongsiriwit <karnyong@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "blogengine/static/bower_components"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5",
+    "html5-boilerplate": "~5.2.0"
+  }
+}
